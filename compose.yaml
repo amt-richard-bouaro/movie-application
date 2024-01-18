@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  # MongoDB service
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-container
+    ports:
+      - "27017:27017"
+
+  # Spring Boot application service
+  springbootmovieapp:
+    image: spring-boot-image:latest
+    container_name: springbootmovieapp-container
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb-container:27017/movies-api-db
+      SPRING_DATA_MONGODB_DATABASE: movies-api-db
+
