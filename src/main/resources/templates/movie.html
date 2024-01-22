@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${movie.title}"></title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+
+    <div class="card vh-55 w-100 d-inline-block mb-3">
+        <img th:src="${movie.poster}" class="card-img-top" alt="..." style="max-height: 70vh;" >
+        <div class="card-body">
+            <h5 th:text="${movie.title}" class="card-title"></h5>
+            <p class="card-text"><span th:each="genre : ${movie.genres}">
+                    <span th:text="${genre}|"></span>
+                </span></p>
+            <p class="card-text">Released on: <small th:text="${movie.releaseDate}" class="text-muted"></small></p>
+        </div>
+</div>
+<h5>Reviews</h5>
+    <ul class="list-group list-group-flush mb-4">
+        <li class="list-group-item">An item</li>
+        <li class="list-group-item">A second item</li>
+        <li class="list-group-item">A third item</li>
+        <li class="list-group-item">A fourth item</li>
+        <li class="list-group-item">And a fifth one</li>
+    </ul>
+
+
+    <form id="reviewForm" th:method="post" th:action="@{/review-movie/{imdbId}(imdbId=${movie.imdbId})}" th:object="${review}">
+        <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Review this movie</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" th:field="*{body}"></textarea>
+    </div>
+        <div class="mb-5">
+            <button type="submit" class="btn btn-primary" form="reviewForm">Send Review</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
